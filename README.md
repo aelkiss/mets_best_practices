@@ -6,8 +6,8 @@ Schematron rules for validating METS best practices
 In oXygen: Document -> Validate -> Validate with: 
 OR: Document -> Schema -> Associate Schema: 
 
-URL: `https://raw.githubusercontent.com/mlibrary/mets_best_practices/master/mets_best_practices.sch`
-Schema type: Schematron
+- URL: `https://raw.githubusercontent.com/mlibrary/mets_best_practices/master/mets_best_practices.sch`
+- Schema type: Schematron
 
 At the command line, there are a few options. Here are a couple projects that have command-line tools to validate a document against a Schematron schema:
 
