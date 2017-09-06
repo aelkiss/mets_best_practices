@@ -11,8 +11,8 @@ Schema type: Schematron
 
 At the command line, there are a few options. Here are a couple projects that have command-line tools to validate a document against a Schematron schema:
 
-https://github.com/flazz/schematron
-https://github.com/NCAR/crux
+- https://github.com/flazz/schematron
+- https://github.com/NCAR/crux
 
 ## Running the tests
 
