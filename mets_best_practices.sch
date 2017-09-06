@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" queryBinding="xslt"
-    xmlns:sqf="http://www.schematron-quickfix.com/validator/process">
+<schema xmlns="http://purl.oclc.org/dsdl/schematron" queryBinding="xslt">
     
-    <sch:ns uri="http://www.loc.gov/METS/" prefix="mets" />
+    <ns uri="http://www.loc.gov/METS/" prefix="mets" />
     
 
     <!-- reviewed language: must (errors), should (a mixture of errors and warnings), typically (warnings) -->
@@ -37,38 +36,56 @@
     
     
     
-    <sch:pattern id="dmdsec-id-checks">
-        <!-- dmdSec@ID should be referenced by @DMDID
+    <pattern id="dmdsec-id-checks">        
+        <rule context="//mets:dmdSec">
+            <let    name="thisid" value="@ID" />
+            <assert test="//*[@DMDID=$thisid]">
+                The dmdSec with ID "<value-of select="@ID"/>" is never referenced by a DMDID attribute
+            </assert>
+        </rule>
+        <rule context="//*[@DMDID]">
+            <let    name="thisid" value="@DMDID" />
+            <assert test="//mets:dmdSec[@ID=$thisid]">
+                The DMDID "<value-of select="@DMDID" />" should reference a dmdSec, not a <value-of select="local-name(//*[@ID=$thisid])" />
+            </assert>
+        </rule>
+    </pattern>         
+    
+    <pattern id="begin-end-betype-checks">
+        <rule context="//mets:file[@BEGIN]  | //mets:stream[@BEGIN] | 
+                           //mets:file[@END]    | //mets:stream[@END]   | 
+                           //mets:file[@BETYPE] | //mets:stream[@BETYPE]">
+            <assert test="parent::mets:file">
+                <!-- this is enforced by the XSD for streams, but not for files. -->
+                A <name /> with BEGIN, END or BETYPE attributes should have a parent file.
+            </assert>
+            <assert test="@END">
+                When no END attribute is specified, the end of the parent file is assumed also to be the end point of the current file.
+            </assert>
+            <assert test="@BEGIN and @BETYPE">
+                A <name /> with BEGIN, END or BETYPE attributes should have BEGIN and BETYPE.
+            </assert>
+        </rule>
+    </pattern>
+       
+    
+    <pattern id="fptr-fileid-checks">
         
-         The following elements support references to a <dmdSec> via a DMDID attribute: <file>, <stream>, <div>.
-    --> 
-        <sch:rule context="//mets:dmdSec">
-            <sch:let    name="thisid" value="@ID" />
-            <sch:assert test="//*[@DMDID=$thisid]">The dmdSec @ID "<sch:value-of select="@ID"/>" is never referenced</sch:assert>
-        </sch:rule>
-        <!-- @DMDID must reference dmdSec@ID -->
-        <sch:rule context="//*[@DMDID]">
-            <sch:assert test="(name(//*[@ID=//*/@DMDID]) = 'METS:dmdSec')">The @DMDID "<sch:value-of select="@DMDID" />" should reference a dmdSec, not a <sch:value-of select="local-name(//*[@ID=//*/@DMDID])" /></sch:assert>
-        </sch:rule>
-    </sch:pattern>
+         <rule context="//mets:fptr[@FILEID]">
+            <report test="./mets:area | ./mets:seq | ./mets:par">
+                A fptr element should only have a FILEID attribute value if it does not have a child area, par or seq element.
+            </report>
+        </rule>
+        
+        <!-- fptr with @FILEID should not have a child <area>, <par>, or <seq> -->
+        <!-- fptr should have @FILEID if there is no child <area>, <par>, or <seq> -->
+        <!-- area should have @FILEID -->
+        <!-- If it has a child element, then the responsibility for pointing to the relevant content 
+        falls to this child element or its descendants." -->     
+    </pattern>
     
     
-    <!-- mdWrap: type of metadata embedded via xmlData must match mdType (check root element? namespace?) -->
-    
-    
-    <!-- files with @BEGIN, @END, or @BETYPE must have a parent file -->
-    <!-- file@BEGIN, file@END (optional but warn that it's assumed to be end of file if missing), file@BETYPE must appear if any do -->
-    <!-- stream@BEGIN, stream@END (optional but warn that it's assumed to be end of file if missing), stream@BETYPE must appear if any do -->
-    
-    
-    
-    <!-- "A <fptr> element should only have a FILEID attribute value if it does not have a child <area>, <par> 
-        or <seq> element. If it has a child element, then the responsibility for pointing to the relevant content 
-        falls to this child element or its descendants." --> 
-    
-    
-    <!-- fptr with @FILEID should not have a child <area>, <par>, or <seq> -->
-    <!-- fptr should have @FILEID if there is no child <area>, <par>, or <seq> -->
+
     
     <!-- @CHECKSUM must have a @CHECKSUMTYPE -->
     <!-- The syntax of @CHECKSUM must match the expected syntax for @CHECKSUMTYPE -->
@@ -139,6 +156,6 @@
     if previous versions are maintained in a file for tracking purposes.
     -->
     
+    <!-- mdWrap: type of metadata embedded via xmlData must match mdType (check root element? namespace?) -->
     
-    
-</sch:schema>
+</schema>
