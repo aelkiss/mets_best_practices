@@ -52,18 +52,22 @@
     </pattern>         
     
     <pattern id="begin-end-betype-checks">
-        <rule context="//mets:file[@BEGIN]  | //mets:stream[@BEGIN] | 
-                           //mets:file[@END]    | //mets:stream[@END]   | 
-                           //mets:file[@BETYPE] | //mets:stream[@BETYPE]">
-            <assert test="parent::mets:file">
-                <!-- this is enforced by the XSD for streams, but not for files. -->
-                A <name /> with BEGIN, END or BETYPE attributes should have a parent file.
-            </assert>
+        <rule context="//mets:*[@BEGIN | @END | @BETYPE]">
             <assert test="@END">
-                When no END attribute is specified, the end of the parent file is assumed also to be the end point of the current file.
+                When no END attribute is specified, the end of the parent file is assumed also to be the end point of the current <name />.
             </assert>
             <assert test="@BEGIN and @BETYPE">
                 A <name /> with BEGIN, END or BETYPE attributes should have BEGIN and BETYPE.
+            </assert>
+        </rule>
+
+    </pattern>
+    
+    <pattern id="file-parent-checks">
+        <rule context="//mets:file[@BEGIN | @END | @BETYPE]">
+            <assert test="parent::mets:file">
+                <!-- this is enforced by the XSD for streams, but not for files. -->
+                A <name /> with BEGIN, END or BETYPE attributes should have a parent file.
             </assert>
         </rule>
     </pattern>
