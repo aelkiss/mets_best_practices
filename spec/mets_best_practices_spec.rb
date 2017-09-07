@@ -6,11 +6,6 @@ def minimal_mets
   Nokogiri::XML File.open File.join(File.dirname(__FILE__), 'minimal_mets.xml')
 end
 
-def run_schematron(xml_doc)
-  stron_doc = Nokogiri::XML File.open File.join(File.dirname(__FILE__), '../mets_best_practices.sch')
-  stron = SchematronNokogiri::Schema.new stron_doc
-  stron.validate xml_doc
-end
 
 def create_node(doc,name,attrs={})
   Nokogiri::XML::Node.new(name,doc).tap do |node|
@@ -55,20 +50,32 @@ describe 'mets_best_practices.sch' do
 
   subject { run_schematron(xml_doc) }
   let(:first_error) { subject.first[:message] }
+  let(:mets_schema) { Nokogiri::XML::Schema(File.open File.join(File.dirname(__FILE__), 'mets.xsd')) }
+  let(:schematron) do
+    stron_doc = Nokogiri::XML File.open File.join(File.dirname(__FILE__), '../mets_best_practices.sch')
+    stron = SchematronNokogiri::Schema.new stron_doc
+  end
 
   shared_examples_for "no errors" do
-    # TODO: should be valid w/ XSD
-    it { is_expected.to be_empty }
+    it "validates against the schematron" do
+      expect(schematron.validate(xml_doc)).to be_empty
+    end
+
+    it "validates against the xsd" do
+      expect(mets_schema.validate(xml_doc)).to be_empty
+    end
   end
 
   shared_examples_for "one error" do |pattern|
-    # TODO: should be valid w/ XSD
-    it "has one message" do
-      expect(subject.length).to eq(1)
+    it "has one error when validated against the schematron" do
+      expect(schematron.validate(xml_doc).length).to eq(1)
+    end
+    it "has an error from schematron validation matching #{pattern}" do
+      expect(schematron.validate(xml_doc).first[:message]).to match(pattern)
     end
 
-    it "has an error matching #{pattern}" do
-      expect(subject.first[:message]).to match(pattern)
+    it "validates against the xsd" do
+      expect(mets_schema.validate(xml_doc)).to be_empty
     end
   end
 
@@ -132,7 +139,7 @@ describe 'mets_best_practices.sch' do
       let(:xml_doc) do
         minimal_mets.tap do |doc|
           filegrp = add_filegrp(doc)
-          filegrp.add_child(create_node(doc,'file',{BEGIN: '1', END: '1000', BETYPE: 'BYTE'}))
+          filegrp.add_child(create_node(doc,'file',{BEGIN: '1', END: '1000', BETYPE: 'BYTE', ID:'file1'}))
         end
       end
 
@@ -143,8 +150,8 @@ describe 'mets_best_practices.sch' do
       let(:xml_doc) do
         minimal_mets.tap do |doc|
           filegrp = add_filegrp(doc)
-          file = filegrp.add_child(create_node(doc,'file'))
-          file.add_child(create_node(doc,'file',{BEGIN: '1', END: '1000'}))
+          file = filegrp.add_child(create_node(doc,'file',{ID: 'file1'}))
+          file.add_child(create_node(doc,'file',{BEGIN: '1', END: '1000',ID: 'file2'}))
         end
       end
 
@@ -155,8 +162,8 @@ describe 'mets_best_practices.sch' do
       let(:xml_doc) do
         minimal_mets.tap do |doc|
           filegrp = add_filegrp(doc)
-          file = filegrp.add_child(create_node(doc,'file'))
-          file.add_child(create_node(doc,'file',{BEGIN: '1', BETYPE: '1000'}))
+          file = filegrp.add_child(create_node(doc,'file',{ID: 'file1'}))
+          file.add_child(create_node(doc,'file',{BEGIN: '1', BETYPE: 'BYTE',ID: 'file2'}))
         end
       end
 
