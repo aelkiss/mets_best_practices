@@ -74,21 +74,19 @@
        
     
     <pattern id="fptr-fileid-checks">
-        
-         <rule context="//mets:fptr[@FILEID]">
+        <rule context="//mets:fptr[@FILEID]">
             <report test="./mets:area | ./mets:seq | ./mets:par">
                 A fptr element should only have a FILEID attribute value if it does not have a child area, par or seq element.
             </report>
-        </rule>
+         </rule>
         
-        <!-- fptr with @FILEID should not have a child <area>, <par>, or <seq> -->
-        <!-- fptr should have @FILEID if there is no child <area>, <par>, or <seq> -->
-        <!-- area should have @FILEID -->
-        <!-- If it has a child element, then the responsibility for pointing to the relevant content 
-        falls to this child element or its descendants." -->     
+        <rule context="//mets:fptr[not(mets:area) and not(mets:seq) and not(mets:par)]">
+            <assert test="@FILEID">
+                A fptr element should have a FILEID attribute if it does not have child area, par, or seq elements.
+            </assert>
+        </rule>
     </pattern>
-    
-    
+
 
     
     <!-- @CHECKSUM must have a @CHECKSUMTYPE -->
