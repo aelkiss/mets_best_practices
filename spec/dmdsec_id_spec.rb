@@ -1,50 +1,18 @@
 require 'spec_helper'
 
 describe 'dmdsec-id-checks' do
+  dmdsec_adder = lambda do |doc,_,id| 
+    add_dmdsec(doc,id)
+  end
 
-	context 'with one unreferenced dmdsec' do
-		let(:xml_doc) do
-			minimal_mets.tap do |doc|
-				add_dmdsec(doc,'dmd1')
-			end
-		end
+  it_behaves_like "all ids are referenced", 'DMDID','dmdSec','div',dmdsec_adder
 
-		it_behaves_like 'one schematron error', /WARNING: The dmdSec with ID "dmd1" is never referenced by a DMDID attribute/
-	end
+  dmdsec_doc_builder = lambda do |doc,id|
+    add_mdsec(doc,'techMD',id)
+    doc.xpath('//xmlns:div').first['DMDID'] = id
+    doc.xpath('//xmlns:div').first['ADMID'] = id
+  end
 
-	context 'with one properly referenced dmdsec' do
-		let(:xml_doc) do
-			minimal_mets.tap do |doc|
-				add_dmdsec(doc,'dmd1')
-				doc.xpath('//xmlns:div').first['DMDID'] = 'dmd1'
-			end
-		end
-
-		it_behaves_like "no errors"
-	end
-
-	context 'with two dmdsecs, one referenced, one not' do
-		let(:xml_doc) do
-			minimal_mets.tap do |doc|
-				add_dmdsec(doc,'dmd1')
-				add_dmdsec(doc,'dmd2')
-				doc.xpath('//xmlns:div').first['DMDID'] = 'dmd1'
-			end
-		end
-
-		it_behaves_like 'one schematron error', /WARNING: The dmdSec with ID "dmd2" is never referenced by a DMDID attribute/
-	end
-
-	context 'with a dmdid referencing a non-dmdsec' do
-		let(:xml_doc) do
-			minimal_mets.tap do |doc|
-				add_mdsec(doc,'techMD','tmd1')
-				doc.xpath('//xmlns:div').first['DMDID'] = 'tmd1'
-				doc.xpath('//xmlns:div').first['ADMID'] = 'tmd1'
-			end
-		end
-
-		it_behaves_like 'one schematron error', /ERROR: The DMDID "tmd1" should reference a dmdSec, not a techMD/
-	end
+  it_behaves_like "idref type checking", "DMDID", ['dmdSec'], 'techMD', dmdsec_doc_builder
 
 end
