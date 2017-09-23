@@ -8,24 +8,35 @@
     <!-- only things fully within the scope of the METS are validatable (can't validate external content 
         or the semantics of external content -->
     
-    <!-- @ADMID must reference [techMD|sourceMD|rightsMD|digiprovMD]@ID 
     
+    <pattern id="mdsec-id-checks">
+        <!-- @ADMID must reference [techMD|sourceMD|rightsMD|digiprovMD]@ID
     
          The following elements support references to <techMD>, <sourceMD>, <rightsMD> and <digiprovMD> 
          elements via an ADMID attribute: <metsHdr>, <dmdSec>, <techMD>, <sourceMD>, <rightsMD>, 
          <digiprovMD>, <fileGrp>, <file>, <stream>, <div>, <area>, <behavior>
     -->
-    
-
-    
-    <!-- [techMD|sourceMD|rightsMD|digiprovMD]@ID should be referenced by 
+        <rule context="//mets:techMD | //mets:rightsMD | //mets:sourceMD | //mets:digiprovMD">
+            <let    name="thisid" value="@ID" />
+            <assert test="//*[@ADMID=$thisid]">
+                The <value-of select="local-name(.)" /> with ID "<value-of select="$thisid"/>" is never referenced by a ADMID attribute
+            </assert>
+        </rule>
+        <!-- [techMD|sourceMD|rightsMD|digiprovMD]@ID should be referenced by
         [metsHdr|dmdSec|techMD|sourceMD|rightsMD|digiprovMD|fileGrp|file|stream|div|area|behavior]@ADMID 
         (Document for @ID: "its value should be referenced from one or more DMDID attributes (when the ID 
         identifies a <dmdSec> element) or ADMID attributes (when the ID identifies a <techMD>, <sourceMD>, 
         <rightsMD> or <digiprovMD> element) that are associated with other elements in the METS document." -->
+        <rule context="//*[@ADMID]">
+            <let    name="thisid" value="@ADMID" />
+            <assert test="(//mets:techMD | //mets:rightsMD | //mets:sourceMD | //mets:digiprovMD)[@ID=$thisid]">
+                The ADMID "<value-of select="@ADMID" />" should reference a techMD, rightsMD, sourceMD, or digiprovMD, not a <value-of select="local-name(//*[@ID=$thisid])" />
+            </assert>
+        </rule>
+    </pattern>
+
     
     <!-- [techMD|dmdSec|sourceMD|rightsMD|digiprovMD]@ADMID should reference digiprovMD@ID?
-        
         ("Typically used in this context to reference preservation metadata (digiprovMD) which applies to the current metadata.") -->
     
     <!-- mets@OBJID should be present: "Although this attribute is not required, it is strongly recommended." -->

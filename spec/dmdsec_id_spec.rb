@@ -40,6 +40,7 @@ describe 'dmdsec-id-checks' do
 			minimal_mets.tap do |doc|
 				add_mdsec(doc,'techMD','tmd1')
 				doc.xpath('//xmlns:div').first['DMDID'] = 'tmd1'
+				doc.xpath('//xmlns:div').first['ADMID'] = 'tmd1'
 			end
 		end
 
