@@ -14,7 +14,9 @@ describe 'file-begin-end-checks' do
       </fileSec>
 
       <structMap>
-        <div />
+        <div>
+          <fptr FILEID="file1" />
+        </div>
       </structMap>
 EOT
     end
@@ -26,14 +28,17 @@ EOT
     let(:innards) do <<EOT
       <fileSec>
         <fileGrp>
-          <file ID='file1' >
-            <file ID='file2' BEGIN="1" END="1000" />
-          </File>
+          <file ID="file1" >
+            <file ID="file2" BEGIN="1" END="1000" />
+          </file>
         </fileGrp>
       </fileSec>
 
       <structMap>
-        <div />
+        <div>
+          <fptr FILEID="file1" />
+          <fptr FILEID="file2" />
+        </div>
       </structMap>
 EOT
     end
@@ -45,14 +50,17 @@ EOT
     let(:innards) do <<EOT
       <fileSec>
         <fileGrp>
-          <file ID='file1' >
-            <file ID='file2' BEGIN="1" BETYPE="BYTE" />
+          <file ID="file1" >
+            <file ID="file2" BEGIN="1" BETYPE="BYTE" />
           </file>
         </fileGrp>
       </fileSec>
 
       <structMap>
-        <div />
+        <div>
+          <fptr FILEID="file1" />
+          <fptr FILEID="file2" />
+        </div>
       </structMap>
 EOT
     end
