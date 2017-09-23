@@ -13,7 +13,7 @@ describe "mdsec-id-checks" do
         end
       end
 
-      it_behaves_like "one schematron error", /The #{mdsec} with ID "#{mdsec_id}" is never referenced by a ADMID attribute/
+      it_behaves_like "one schematron error", /WARNING: The #{mdsec} with ID "#{mdsec_id}" is never referenced by a ADMID attribute/
     end
 
     context "with one properly referenced #{mdsec}" do
@@ -36,7 +36,7 @@ describe "mdsec-id-checks" do
         end
       end
 
-      it_behaves_like "one schematron error", /The #{mdsec} with ID "#{another_mdsec_id}" is never referenced by a ADMID attribute/
+      it_behaves_like "one schematron error", /WARNING: The #{mdsec} with ID "#{another_mdsec_id}" is never referenced by a ADMID attribute/
     end
 
   end
@@ -50,7 +50,7 @@ describe "mdsec-id-checks" do
       end
     end
 
-    it_behaves_like "one schematron error", /The ADMID "dmd1" should reference a techMD, rightsMD, sourceMD, or digiprovMD, not a dmdSec/
+    it_behaves_like "one schematron error", /ERROR: The ADMID "dmd1" should reference a techMD, rightsMD, sourceMD, or digiprovMD, not a dmdSec/
   end
 
 end

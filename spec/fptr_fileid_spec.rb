@@ -24,7 +24,7 @@ describe 'fptr-fileid-checks' do
 				end
 			end
 
-			it_behaves_like 'one schematron error', /A fptr element should only have a FILEID attribute value if it does not have a child area, par or seq element./
+			it_behaves_like 'one schematron error', /ERROR: A fptr element should only have a FILEID attribute value if it does not have a child area, par or seq element./
 		end
 
 		context 'with children but no FILEID' do
@@ -46,7 +46,7 @@ describe 'fptr-fileid-checks' do
 				end
 			end
 
-			it_behaves_like 'one schematron error', /A fptr element should have a FILEID attribute if it does not have child area, par, or seq elements./
+			it_behaves_like 'one schematron error', /ERROR: A fptr element should have a FILEID attribute if it does not have child area, par, or seq elements./
 		end
 
 	end

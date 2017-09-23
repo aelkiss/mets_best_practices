@@ -10,7 +10,7 @@ describe 'file-begin-end-checks' do
 			end
 		end
 
-		it_behaves_like 'one schematron error', /A file with BEGIN, END or BETYPE attributes should have a parent file/
+		it_behaves_like 'one schematron error', /ERROR: A file with BEGIN, END or BETYPE attributes should have a parent file/
 	end
 
 	context 'with a nested file with BEGIN and END but not BETYPE' do
@@ -22,7 +22,7 @@ describe 'file-begin-end-checks' do
 			end
 		end
 
-		it_behaves_like 'one schematron error', /A file with BEGIN, END or BETYPE attributes should have BEGIN and BETYPE./
+		it_behaves_like 'one schematron error', /ERROR: A file with BEGIN, END or BETYPE attributes should have BEGIN and BETYPE./
 	end 
 
 	context 'with a nested file with BEGIN and BETYPE but not END' do
@@ -34,7 +34,7 @@ describe 'file-begin-end-checks' do
 			end
 		end
 
-		it_behaves_like 'one schematron error', /When no END attribute is specified, the end of the parent file is assumed also to be the end point of the current file./
+		it_behaves_like 'one schematron error', /INFO: When no END attribute is specified, the end of the parent file is assumed also to be the end point of the current file./
 	end 
 
 end

@@ -9,7 +9,7 @@ describe 'dmdsec-id-checks' do
 			end
 		end
 
-		it_behaves_like 'one schematron error', /The dmdSec with ID "dmd1" is never referenced by a DMDID attribute/
+		it_behaves_like 'one schematron error', /WARNING: The dmdSec with ID "dmd1" is never referenced by a DMDID attribute/
 	end
 
 	context 'with one properly referenced dmdsec' do
@@ -32,7 +32,7 @@ describe 'dmdsec-id-checks' do
 			end
 		end
 
-		it_behaves_like 'one schematron error', /The dmdSec with ID "dmd2" is never referenced by a DMDID attribute/
+		it_behaves_like 'one schematron error', /WARNING: The dmdSec with ID "dmd2" is never referenced by a DMDID attribute/
 	end
 
 	context 'with a dmdid referencing a non-dmdsec' do
@@ -44,7 +44,7 @@ describe 'dmdsec-id-checks' do
 			end
 		end
 
-		it_behaves_like 'one schematron error', /The DMDID "tmd1" should reference a dmdSec, not a techMD/
+		it_behaves_like 'one schematron error', /ERROR: The DMDID "tmd1" should reference a dmdSec, not a techMD/
 	end
 
 end

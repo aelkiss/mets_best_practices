@@ -19,7 +19,7 @@
         <rule context="//mets:techMD | //mets:rightsMD | //mets:sourceMD | //mets:digiprovMD">
             <let    name="thisid" value="@ID" />
             <assert test="//*[@ADMID=$thisid]">
-                The <value-of select="local-name(.)" /> with ID "<value-of select="$thisid"/>" is never referenced by a ADMID attribute
+                WARNING: The <value-of select="local-name(.)" /> with ID "<value-of select="$thisid"/>" is never referenced by a ADMID attribute
             </assert>
         </rule>
         <!-- [techMD|sourceMD|rightsMD|digiprovMD]@ID should be referenced by
@@ -30,7 +30,7 @@
         <rule context="//*[@ADMID]">
             <let    name="thisid" value="@ADMID" />
             <assert test="(//mets:techMD | //mets:rightsMD | //mets:sourceMD | //mets:digiprovMD)[@ID=$thisid]">
-                The ADMID "<value-of select="$thisid" />" should reference a techMD, rightsMD, sourceMD, or digiprovMD, not a <value-of select="local-name(//*[@ID=$thisid])" />
+                ERROR: The ADMID "<value-of select="$thisid" />" should reference a techMD, rightsMD, sourceMD, or digiprovMD, not a <value-of select="local-name(//*[@ID=$thisid])" />
             </assert>
         </rule>
     </pattern>
@@ -51,13 +51,13 @@
         <rule context="//mets:dmdSec">
             <let    name="thisid" value="@ID" />
             <assert test="//*[@DMDID=$thisid]">
-                The dmdSec with ID "<value-of select="$thisid"/>" is never referenced by a DMDID attribute
+               WARNING: The dmdSec with ID "<value-of select="$thisid"/>" is never referenced by a DMDID attribute
             </assert>
         </rule>
         <rule context="//*[@DMDID]">
             <let    name="thisid" value="@DMDID" />
             <assert test="//mets:dmdSec[@ID=$thisid]">
-                The DMDID "<value-of select="$thisid" />" should reference a dmdSec, not a <value-of select="local-name(//*[@ID=$thisid])" />
+                ERROR: The DMDID "<value-of select="$thisid" />" should reference a dmdSec, not a <value-of select="local-name(//*[@ID=$thisid])" />
             </assert>
         </rule>
     </pattern>         
@@ -65,10 +65,10 @@
     <pattern id="begin-end-betype-checks">
         <rule context="//mets:*[@BEGIN | @END | @BETYPE]">
             <assert test="@END">
-                When no END attribute is specified, the end of the parent file is assumed also to be the end point of the current <name />.
+                INFO: When no END attribute is specified, the end of the parent file is assumed also to be the end point of the current <name />.
             </assert>
             <assert test="@BEGIN and @BETYPE">
-                A <name /> with BEGIN, END or BETYPE attributes should have BEGIN and BETYPE.
+                ERROR: A <name /> with BEGIN, END or BETYPE attributes should have BEGIN and BETYPE.
             </assert>
         </rule>
 
@@ -78,7 +78,7 @@
         <rule context="//mets:file[@BEGIN | @END | @BETYPE]">
             <assert test="parent::mets:file">
                 <!-- this is enforced by the XSD for streams, but not for files. -->
-                A <name /> with BEGIN, END or BETYPE attributes should have a parent file.
+                ERROR: A <name /> with BEGIN, END or BETYPE attributes should have a parent file.
             </assert>
         </rule>
     </pattern>
@@ -87,13 +87,13 @@
     <pattern id="fptr-fileid-checks">
         <rule context="//mets:fptr[@FILEID]">
             <report test="./mets:area | ./mets:seq | ./mets:par">
-                A fptr element should only have a FILEID attribute value if it does not have a child area, par or seq element.
+                ERROR: A fptr element should only have a FILEID attribute value if it does not have a child area, par or seq element.
             </report>
          </rule>
         
         <rule context="//mets:fptr[not(mets:area) and not(mets:seq) and not(mets:par)]">
             <assert test="@FILEID">
-                A fptr element should have a FILEID attribute if it does not have child area, par, or seq elements.
+                ERROR: A fptr element should have a FILEID attribute if it does not have child area, par, or seq elements.
             </assert>
         </rule>
     </pattern>
