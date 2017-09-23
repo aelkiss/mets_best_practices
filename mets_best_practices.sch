@@ -30,7 +30,7 @@
         <rule context="//*[@ADMID]">
             <let    name="thisid" value="@ADMID" />
             <assert test="(//mets:techMD | //mets:rightsMD | //mets:sourceMD | //mets:digiprovMD)[@ID=$thisid]">
-                The ADMID "<value-of select="@ADMID" />" should reference a techMD, rightsMD, sourceMD, or digiprovMD, not a <value-of select="local-name(//*[@ID=$thisid])" />
+                The ADMID "<value-of select="$thisid" />" should reference a techMD, rightsMD, sourceMD, or digiprovMD, not a <value-of select="local-name(//*[@ID=$thisid])" />
             </assert>
         </rule>
     </pattern>
@@ -51,13 +51,13 @@
         <rule context="//mets:dmdSec">
             <let    name="thisid" value="@ID" />
             <assert test="//*[@DMDID=$thisid]">
-                The dmdSec with ID "<value-of select="@ID"/>" is never referenced by a DMDID attribute
+                The dmdSec with ID "<value-of select="$thisid"/>" is never referenced by a DMDID attribute
             </assert>
         </rule>
         <rule context="//*[@DMDID]">
             <let    name="thisid" value="@DMDID" />
             <assert test="//mets:dmdSec[@ID=$thisid]">
-                The DMDID "<value-of select="@DMDID" />" should reference a dmdSec, not a <value-of select="local-name(//*[@ID=$thisid])" />
+                The DMDID "<value-of select="$thisid" />" should reference a dmdSec, not a <value-of select="local-name(//*[@ID=$thisid])" />
             </assert>
         </rule>
     </pattern>         
