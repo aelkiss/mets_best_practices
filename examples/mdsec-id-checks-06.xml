@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<mets xmlns="http://www.loc.gov/METS/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd">
+  <metsHdr/>
+  <dmdSec ID="DMD1"/>
+  <amdSec>
+    <techMD ID="TMD1"/>
+  </amdSec>
+  <structMap>
+    <div DMDID="DMD1" ADMID="TMD1 DMD1"/>
+  </structMap>
+</mets>
