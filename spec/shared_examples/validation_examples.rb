@@ -5,7 +5,7 @@ RSpec.shared_examples_for "no errors" do
 		expect(schematron.validate(xml_doc)).to be_empty
 	end
 
-	xit "validates against the xsd" do
+	it "validates against the xsd" do
 		expect(mets_schema.validate(xml_doc)).to be_empty
 	end
 end
@@ -20,7 +20,7 @@ RSpec.shared_examples_for "one schematron error" do |pattern|
 		expect(schematron.validate(xml_doc).first[:message]).to match(pattern)
 	end
 
-	xit "validates against the xsd" do
+	it "validates against the xsd" do
 		expect(mets_schema.validate(xml_doc)).to be_empty
 	end
 end
