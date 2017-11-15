@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://purl.oclc.org/dsdl/schematron" queryBinding="xslt">
+<schema xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" queryBinding="xslt2">
     
     <ns uri="http://www.loc.gov/METS/" prefix="mets" />
-    
 
     <!-- reviewed language: must (errors), should (a mixture of errors and warnings), typically (warnings) -->
     <!-- only things fully within the scope of the METS are validatable (can't validate external content 
@@ -18,7 +17,7 @@
     -->
         <rule context="//mets:techMD | //mets:rightsMD | //mets:sourceMD | //mets:digiprovMD">
             <let    name="thisid" value="@ID" />
-            <assert test="//*[@ADMID=$thisid]">
+            <assert role="warn" id="mdsec_id_is_referenced" test="//*[@ADMID=$thisid]">
                 WARNING: The <value-of select="local-name(.)" /> with ID "<value-of select="$thisid"/>" is never referenced by a ADMID attribute
             </assert>
         </rule>
@@ -29,7 +28,7 @@
         <rightsMD> or <digiprovMD> element) that are associated with other elements in the METS document." -->
         <rule context="//*[@ADMID]">
             <let    name="thisid" value="@ADMID" />
-            <assert test="(//mets:techMD | //mets:rightsMD | //mets:sourceMD | //mets:digiprovMD)[@ID=$thisid]">
+            <assert id="admid_references_mdsec" test="(//mets:techMD | //mets:rightsMD | //mets:sourceMD | //mets:digiprovMD)[@ID=$thisid]">
                 ERROR: The ADMID "<value-of select="$thisid" />" should reference a techMD, rightsMD, sourceMD, or digiprovMD, not a <value-of select="local-name(//*[@ID=$thisid])" />
             </assert>
         </rule>
@@ -47,7 +46,7 @@
         <!-- file@ID should be referenced by some [fptr|area]@FILEID -->      
         <rule context="//mets:file">
             <let    name="thisid" value="@ID" />
-            <assert test="//*[@FILEID=$thisid]">
+            <assert role="warn" test="//*[@FILEID=$thisid]" id="file_id_is_referenced">
                 WARNING: The <value-of select="local-name(.)" /> with ID "<value-of select="$thisid"/>" is never referenced by a FILEID attribute
             </assert>
         </rule>
@@ -55,7 +54,7 @@
         <!-- @FILEID must reference file@ID -->
         <rule context="//*[@FILEID]">
             <let    name="thisid" value="@FILEID" />
-            <assert test="//mets:file[@ID=$thisid]">
+            <assert test="//mets:file[@ID=$thisid]" id="fileid_references_file">
                 ERROR: The FILEID "<value-of select="$thisid" />" should reference a file, not a <value-of select="local-name(//*[@ID=$thisid])" />
             </assert>
         </rule>
@@ -65,24 +64,23 @@
     <pattern id="dmdsec-id-checks">        
         <rule context="//mets:dmdSec">
             <let    name="thisid" value="@ID" />
-            <assert test="//*[@DMDID=$thisid]">
+            <assert role="warn" id="dmd_id_is_referenced" test="//*[tokenize(@DMDID,'\s+')=$thisid]" >
                WARNING: The dmdSec with ID "<value-of select="$thisid"/>" is never referenced by a DMDID attribute
             </assert>
         </rule>
         <rule context="//*[@DMDID]">
             <let    name="thisid" value="@DMDID" />
-            <assert test="//mets:dmdSec[@ID=$thisid]">
+            <assert id="dmdid_references_dmdsec" test="//mets:dmdSec[@ID=$thisid]">
                 ERROR: The DMDID "<value-of select="$thisid" />" should reference a dmdSec, not a <value-of select="local-name(//*[@ID=$thisid])" />
-            </assert>
         </rule>
     </pattern>         
     
     <pattern id="begin-end-betype-checks">
         <rule context="//mets:*[@BEGIN | @END | @BETYPE]">
-            <assert test="@END">
+            <assert role="info" id="end-default-value" test="@END">
                 INFO: When no END attribute is specified, the end of the parent file is assumed also to be the end point of the current <name />.
             </assert>
-            <assert test="@BEGIN and @BETYPE">
+            <assert id="begin-end-betype" test="@BEGIN and @BETYPE">
                 ERROR: A <name /> with BEGIN, END or BETYPE attributes should have BEGIN and BETYPE.
             </assert>
         </rule>
@@ -91,7 +89,7 @@
     
     <pattern id="file-parent-checks">
         <rule context="//mets:file[@BEGIN | @END | @BETYPE]">
-            <assert test="parent::mets:file">
+            <assert id="file-begin-end-betype-has-parent" test="parent::mets:file">
                 <!-- this is enforced by the XSD for streams, but not for files. -->
                 ERROR: A <name /> with BEGIN, END or BETYPE attributes should have a parent file.
             </assert>
@@ -101,13 +99,13 @@
     
     <pattern id="fptr-fileid-checks">
         <rule context="//mets:fptr[@FILEID]">
-            <report test="./mets:area | ./mets:seq | ./mets:par">
+            <report id="fptr-with-children-has-no-fileid" test="./mets:area | ./mets:seq | ./mets:par">
                 ERROR: A fptr element should only have a FILEID attribute value if it does not have a child area, par or seq element.
             </report>
          </rule>
         
         <rule context="//mets:fptr[not(mets:area) and not(mets:seq) and not(mets:par)]">
-            <assert test="@FILEID">
+            <assert id="fptr-without-children-has-fileid" test="@FILEID">
                 ERROR: A fptr element should have a FILEID attribute if it does not have child area, par, or seq elements.
             </assert>
         </rule>
