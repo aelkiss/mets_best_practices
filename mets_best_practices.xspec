@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?> <?xml-model href="xspec.rnc" type="application/relax-ng-compact-syntax"?> 
+<x:description xmlns:x="http://www.jenitennison.com/xslt/xspec" schematron="mets_best_practices.sch">
+    <x:scenario label="dmdsec-id-checks">
+        <x:scenario label="with one unreferenced dmdsec">
+            <x:context href="examples/dmdsec-id-checks-01.xml" />
+            <x:expect-assert id="dmd_id_is_referenced"/>
+            <x:expect-valid/>
+        </x:scenario>
+        <x:scenario label="with one properly referenced dmdsec">
+            <x:context href="examples/dmdsec-id-checks-02.xml" />
+            <x:expect-valid/>
+        </x:scenario>
+        <x:scenario label="with two dmdSecs, one referenced, one not">
+            <x:context href="examples/dmdsec-id-checks-03.xml" />
+            <x:expect-assert id="dmd_id_is_referenced"/>
+            <x:expect-valid/>
+        </x:scenario>
+        <x:scenario label="with a dmdid referencing a non-dmdsec">
+            <x:context href="examples/dmdsec-id-checks-04.xml" />          
+            <x:expect-assert id="dmdid_references_dmdsec"/>
+        </x:scenario>
+    </x:scenario>
+    
+    <x:scenario label="file-begin-end-checks">
+        
+        <x:scenario label="with a file with BEGIN, END, BETYPE attributes that does not have a parent file">
+            <x:context href="examples/file-begin-end-checks-01.xml" />
+            <x:expect-assert id="file-begin-end-betype-has-parent" />
+        </x:scenario>
+        
+        <x:scenario label="with a nested file with BEGIN and END but not BETYPE">
+            <x:context href="examples/file-begin-end-checks-02.xml" />
+            <x:expect-assert id="begin-end-betype" />
+        </x:scenario>
+        
+        <x:scenario label="with a nested file with BEGIN and BETYPE but not END">
+            <x:context href="examples/file-begin-end-checks-03.xml" />
+            <x:expect-assert id="end-default-value" />
+            <x:expect-valid />
+        </x:scenario>
+        
+        <x:scenario label="With a nested file with BEGIN, END, and BETYPE">
+            <x:context href="examples/file-begin-end-checks-04.xml" />
+            <x:expect-valid />
+        </x:scenario>
+    
+        
+    </x:scenario>
+    
+    <x:scenario label="file-id-checks">
+        <x:scenario label="with one unreferenced file">
+            <x:context href="examples/file-id-checks-01.xml" />
+            <x:expect-assert id="file_id_is_referenced"/>
+            <x:expect-valid/>
+        </x:scenario>
+        <x:scenario label="with one properly referenced file">
+            <x:context href="examples/file-id-checks-02.xml" />
+            <x:expect-valid/>
+        </x:scenario>
+        <x:scenario label="with two files, one referenced, one not">
+            <x:context href="examples/file-id-checks-03.xml" />
+            <x:expect-assert id="file_id_is_referenced"/>
+            <x:expect-valid/>
+        </x:scenario>
+        <x:scenario label="with a fileid referencing a non-file">
+            <x:context href="examples/file-id-checks-04.xml" />          
+            <x:expect-assert id="fileid_references_file"/>
+        </x:scenario>
+    </x:scenario>
+    
+    <x:scenario label="fptr-fileid-checks">
+        <x:scenario label="with FILEID and no children">
+            <x:context href="examples/fptr-fileid-checks-01.xml" />
+            <x:expect-valid/>
+        </x:scenario>
+        <x:scenario label="with FILEID and children">
+            <x:context href="examples/fptr-fileid-checks-02.xml" />
+            <x:expect-report id="fptr-with-children-has-no-fileid" />
+        </x:scenario>
+        <x:scenario label="with children but no FILEID">
+            <x:context href="examples/fptr-fileid-checks-03.xml" />
+            <x:expect-valid/>
+        </x:scenario>
+        <x:scenario label="with no child and no FILEID">
+            <x:context href="examples/fptr-fileid-checks-04.xml" />          
+            <x:expect-assert id="fptr-without-children-has-fileid" />
+        </x:scenario>
+    </x:scenario>
+    
+    <x:scenario label="mdsec-id-checks">
+        <x:scenario label="with one unreferenced mdsec">
+            <x:context href="examples/mdsec-id-checks-01.xml" />
+            <x:expect-assert id="mdsec_id_is_referenced"/>
+            <x:expect-valid/>
+        </x:scenario>
+        <x:scenario label="with one properly referenced mdsec">
+            <x:context href="examples/mdsec-id-checks-02.xml" />
+            <x:expect-valid/>
+        </x:scenario>
+        <x:scenario label="with two mdsecs, one referenced, one not">
+            <x:context href="examples/mdsec-id-checks-03.xml" />
+            <x:expect-assert id="mdsec_id_is_referenced"/>
+            <x:expect-valid/>
+        </x:scenario>
+        <x:scenario label="with a dmdid referencing a non-dmdsec">
+            <x:context href="examples/mdsec-id-checks-04.xml" />          
+            <x:expect-assert id="admid_references_mdsec"/>
+        </x:scenario>
+    </x:scenario>
+    
+ </x:description>

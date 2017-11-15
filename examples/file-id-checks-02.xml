@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<mets xmlns="http://www.loc.gov/METS/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd">
+  <metsHdr/>
+  <fileSec>
+    <fileGrp>
+      <file ID="FILE1"/>
+    </fileGrp>
+  </fileSec>
+  <structMap>
+    <div>
+      <fptr FILEID="FILE1"/>
+    </div>
+  </structMap>
+</mets>

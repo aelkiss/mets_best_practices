@@ -1,6 +1,7 @@
 ## Environment normalization:
 /.bundle/
 /vendor/bundle
+xspec
 
 # vim backups
 *~
