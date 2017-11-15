@@ -105,10 +105,6 @@ RSpec.configure do |config|
   config.include_context "mets_best_practices", :include_shared => true
 end
 
-def minimal_mets
-  Nokogiri::XML File.open File.join(File.dirname(__FILE__), 'minimal_mets.xml')
-end
-
 def minimal_mets_template(innards)
     Nokogiri::XML <<EOT
 <?xml version="1.0" encoding="UTF-8"?>
