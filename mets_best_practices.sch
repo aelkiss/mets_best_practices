@@ -72,6 +72,7 @@
             <let    name="thisid" value="@DMDID" />
             <assert id="dmdid_references_dmdsec" test="//mets:dmdSec[@ID=$thisid]">
                 ERROR: The DMDID "<value-of select="$thisid" />" should reference a dmdSec, not a <value-of select="local-name(//*[@ID=$thisid])" />
+            </assert>
         </rule>
     </pattern>         
     
