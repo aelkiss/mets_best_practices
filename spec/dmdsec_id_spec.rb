@@ -5,10 +5,11 @@ describe 'dmdsec-id-checks' do
 
   context "with one unreferenced dmdSec" do
     let(:innards) do <<EOT
-<dmdSec ID="DMD1" />
-<structMap>
-<div>
-</structMap>
+    <dmdSec ID="DMD1" />
+
+    <structMap>
+      <div />
+    </structMap>
 EOT
     end
 
@@ -47,6 +48,7 @@ EOT
    <amdSec>
      <techMD ID='TMD1' />
    </amdSec>
+
    <structMap>
      <div DMDID='TMD1' ADMID='TMD1' />
    </structMap>

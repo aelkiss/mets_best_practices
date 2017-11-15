@@ -14,12 +14,13 @@ describe 'fptr-fileid-checks' do
             <file ID="file1" />
           </fileGrp>
         </fileSec>
+
         <structMap>
           <div>
             <fptr FILEID="file1" />
           </div>
         </structMap>
-      
+
 EOT
       end
 
@@ -33,6 +34,7 @@ EOT
             <file ID="file1" />
           </fileGrp>
         </fileSec>
+
         <structMap>
           <div>
             <fptr FILEID="file1">
@@ -40,7 +42,7 @@ EOT
             </fptr>
           </div>
         </structMap>
-      
+
 EOT
       end
 
@@ -54,6 +56,7 @@ EOT
             <file ID="file1" />
           </fileGrp>
         </fileSec>
+
         <structMap>
           <div>
             <fptr>
@@ -61,7 +64,7 @@ EOT
             </fptr>
           </div>
         </structMap>
-      
+
 EOT
       end
 
@@ -75,7 +78,7 @@ EOT
             <fptr />
           </div>
         </structMap>
-      
+
 EOT
       end
 
