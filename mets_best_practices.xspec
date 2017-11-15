@@ -19,6 +19,15 @@
             <x:context href="examples/dmdsec-id-checks-04.xml" />          
             <x:expect-assert id="dmdid_references_dmdsec"/>
         </x:scenario>
+        <x:scenario label="with a dmdid referencing two dmdsecs">
+            <x:context href="examples/dmdsec-id-checks-05.xml" />
+            <x:expect-not-assert id="dmd_id_is_referenced"/>
+            <x:expect-valid/>
+        </x:scenario>
+        <x:scenario label="with a dmdid referencing one dmdsec and one non-dmdsec">
+            <x:context href="examples/dmdsec-id-checks-06.xml" />
+            <x:expect-assert id="dmdid_references_dmdsec"/>
+        </x:scenario>
     </x:scenario>
     
     <x:scenario label="file-begin-end-checks">
@@ -102,8 +111,17 @@
             <x:expect-assert id="mdsec_id_is_referenced"/>
             <x:expect-valid/>
         </x:scenario>
-        <x:scenario label="with a dmdid referencing a non-dmdsec">
+        <x:scenario label="with an admid referencing a non-mdsec">
             <x:context href="examples/mdsec-id-checks-04.xml" />          
+            <x:expect-assert id="admid_references_mdsec"/>
+        </x:scenario>
+        <x:scenario label="with an admid referencing two mdsecs">
+            <x:context href="examples/mdsec-id-checks-05.xml" />
+            <x:expect-not-assert id="mdsec_id_is_referenced"/>
+            <x:expect-valid/>
+        </x:scenario>
+        <x:scenario label="with an admid referencing one techmd and one dmdsec">
+            <x:context href="examples/mdsec-id-checks-06.xml" />
             <x:expect-assert id="admid_references_mdsec"/>
         </x:scenario>
     </x:scenario>

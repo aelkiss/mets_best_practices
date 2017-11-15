@@ -17,7 +17,8 @@
     -->
         <rule context="//mets:techMD | //mets:rightsMD | //mets:sourceMD | //mets:digiprovMD">
             <let    name="thisid" value="@ID" />
-            <assert role="warn" id="mdsec_id_is_referenced" test="//*[@ADMID=$thisid]">
+            
+            <assert role="warn" id="mdsec_id_is_referenced" test="//*[tokenize(@ADMID,'\s+')=$thisid]">
                 WARNING: The <value-of select="local-name(.)" /> with ID "<value-of select="$thisid"/>" is never referenced by a ADMID attribute
             </assert>
         </rule>
@@ -26,10 +27,11 @@
         (Document for @ID: "its value should be referenced from one or more DMDID attributes (when the ID 
         identifies a <dmdSec> element) or ADMID attributes (when the ID identifies a <techMD>, <sourceMD>, 
         <rightsMD> or <digiprovMD> element) that are associated with other elements in the METS document." -->
-        <rule context="//*[@ADMID]">
-            <let    name="thisid" value="@ADMID" />
-            <assert id="admid_references_mdsec" test="(//mets:techMD | //mets:rightsMD | //mets:sourceMD | //mets:digiprovMD)[@ID=$thisid]">
-                ERROR: The ADMID "<value-of select="$thisid" />" should reference a techMD, rightsMD, sourceMD, or digiprovMD, not a <value-of select="local-name(//*[@ID=$thisid])" />
+        <rule context="//*[@ADMID]">                    
+            <let    name="theseids" value="tokenize(@ADMID,'\s+')"/>
+            
+            <assert id="admid_references_mdsec" test="count((//mets:techMD | //mets:rightsMD | //mets:sourceMD | //mets:digiprovMD)[$theseids = @ID]) = count($theseids)">
+                ERROR: Each ADMID in "<value-of select="@ADMID" />" should reference a techMD, rightsMD, sourceMD, or digiprovMD />
             </assert>
         </rule>
     </pattern>
@@ -69,10 +71,10 @@
             </assert>
         </rule>
         <rule context="//*[@DMDID]">
-            <let    name="thisid" value="@DMDID" />
-            <assert id="dmdid_references_dmdsec" test="//mets:dmdSec[@ID=$thisid]">
-                ERROR: The DMDID "<value-of select="$thisid" />" should reference a dmdSec, not a <value-of select="local-name(//*[@ID=$thisid])" />
-            </assert>
+            <let    name="theseids" value="tokenize(@DMDID,'\s+')"/>
+            <assert id="dmdid_references_dmdsec" test="count(//mets:dmdSec[$theseids = @ID]) = count($theseids)" >
+                ERROR: Each DMDID in "<value-of select="@DMDID" />" should reference a dmdSec
+            </assert>           
         </rule>
     </pattern>         
     
