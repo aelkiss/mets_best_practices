@@ -13,13 +13,12 @@ FIXME: How to run with Saxon-HE at the command line?
 
 ## Running the tests
 
-```bash
-
 - Download Saxon-HE: https://sourceforge.net/projects/saxon/files/Saxon-HE/ (only 9.7 is known to work)
 
 - Download XSpec: https://github.com/xspec/xspec - follow the instructions under Getting Started to download and set the path to Saxon
 
 Run XSpec:
-```
+
+```bash
 /path/to/xspec.sh -s mets_best_practices.xspec
 ```
