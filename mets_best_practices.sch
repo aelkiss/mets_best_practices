@@ -41,10 +41,25 @@
     
     <!-- mets@OBJID should be present: "Although this attribute is not required, it is strongly recommended." -->
     
-    <!-- @FILEID must reference file@ID -->
-    <!-- file@ID should be referenced by some [fptr|area]@FILEID -->
     
     
+    <pattern id="file-id-checks">
+        <!-- file@ID should be referenced by some [fptr|area]@FILEID -->      
+        <rule context="//mets:file">
+            <let    name="thisid" value="@ID" />
+            <assert test="//*[@FILEID=$thisid]">
+                WARNING: The <value-of select="local-name(.)" /> with ID "<value-of select="$thisid"/>" is never referenced by a FILEID attribute
+            </assert>
+        </rule>
+
+        <!-- @FILEID must reference file@ID -->
+        <rule context="//*[@FILEID]">
+            <let    name="thisid" value="@FILEID" />
+            <assert test="//mets:file[@ID=$thisid]">
+                ERROR: The FILEID "<value-of select="$thisid" />" should reference a file, not a <value-of select="local-name(//*[@ID=$thisid])" />
+            </assert>
+        </rule>
+    </pattern>
     
     
     <pattern id="dmdsec-id-checks">        
