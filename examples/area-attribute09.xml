@@ -9,7 +9,7 @@
   <structMap>
     <div>
       <fptr>
-        <area FILEID="file1" BEGIN="somewhere" END="somewhere" BETYPE="BYTE"/>
+        <area FILEID="file1"/>
       </fptr>
     </div>
   </structMap>

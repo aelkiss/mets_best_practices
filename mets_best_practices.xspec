@@ -204,6 +204,26 @@
       <x:expect-report id="area-end-extent" />
       <x:expect-valid />
     </x:scenario>
+    
+    <x:scenario label="with BEGIN, END, BETYPE (examples/area-attributes07.xml)">
+      <x:context href="examples/area-attribute07.xml" />
+      <x:expect-valid />
+    </x:scenario>
+    
+    <x:scenario label="with BEGIN, EXTENT, EXTTYPE (examples/area-attributes08.xml)">
+      <x:context href="examples/area-attribute08.xml" />
+      <x:expect-valid />    
+    </x:scenario>
+    
+    <x:scenario label="with no area attributes">
+      <x:context href="examples/area-attribute09.xml" />
+      <x:expect-assert id="area-has-shape-or-begin" /> 
+    </x:scenario>
+    
+  </x:scenario>
+  
+  <x:scenario label="file-use-checks">
+    
   </x:scenario>
 
 </x:description>

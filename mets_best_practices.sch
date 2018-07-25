@@ -84,7 +84,7 @@
     </pattern>
 
     <pattern id="begin-end-betype-checks">
-        <rule context="//mets:*[@BEGIN | @END | @BETYPE]">
+        <rule context="//mets:file[@BEGIN | @END | @BETYPE] | //mets:stream[@BEGIN | @END | @BETYPE]">
             <assert role="info" id="end-default-value" test="@END"> INFO: When no END attribute is
                 specified, the end of the parent file is assumed also to be the end point of the
                 current <name/>. </assert>
@@ -167,28 +167,39 @@
             <report id="area-shape-and-range" test="@BETYPE | @BEGIN | @END | @EXTENT | @EXTTYPE"
                 role="warn"> WARNING: An area shouldn't have both a shape and a range </report>
         </rule>
+                
+        <rule context="//mets:area">
+            <assert id="area-has-shape-or-begin" test="@SHAPE or @BEGIN">
+                ERROR: An area must have either SHAPE or BEGIN.
+            </assert>
+        </rule>
+        
     </pattern>
     
     <pattern id="area-type-checks">
         <rule context="//mets:area[@BETYPE | @EXTTYPE]">
-            <report id="area-betype-exttype" test=".[@BETYPE][@EXTTYPE]" role="warn"> WARNING: An
+            <report id="area-betype-exttype" test="@BETYPE and @EXTTYPE" role="warn"> WARNING: An
                 area shouldn't have both BETYPE and EXTTYPE </report>
         </rule>
     </pattern>
     
     <pattern id="area-extent-checks">
         <rule context="//mets:area[@EXTENT | @END]">
-            <report id="area-end-extent" test=".[@EXTENT][@END]" role="warn"> WARNING: An area
+            <report id="area-end-extent" test="@EXTENT and @END" role="warn"> WARNING: An area
                 shouldn't have both EXTENT and END </report>
         </rule>
     </pattern>
 
-    <!-- area should have one set of: @SHAPE, @COORDS;
-                                      @BEGIN, @END (optional, warn that it's end of doc if missing), @BETYPE;
-                                      @BEGIN, @EXTENT (optional, warn that it's end of doc if missing), @EXTTYPE -->
-
-
-
+    <pattern id="area-begin-checks">
+        <rule context="//mets:area[@BEGIN]">
+            <assert role="info" id="area-end-default-value" test="@END or @EXTENT"> INFO: When no END or EXTENT attribute is
+                specified, the end of the parent file is assumed also to be the end point of the
+                current <name/>. </assert>            
+        </rule>
+    </pattern>
+        
+    <!-- warn if area has no SHAPE or BEGIN -->
+    
     <!-- every fileGrp, file, or FLocat/FContent must have no more than one USE (inherited or otherwise) -->
 
     <!-- every fileGrp, file, or FLocat/FContent should have exactly one USE (inherited or otherwise) -->
@@ -204,19 +215,6 @@
 
     <!-- area@COORDS should have the expected syntax for the shape -->
     <!-- @BEGIN, @END, @EXTENT should match the expected syntax for @BETYPE, @EXTTYPE -->
-
-    <!-- area@BEGIN: It can be used in conjunction with either the END attribute or the EXTENT attribute
-        as a means of defining the relevant portion of the referenced file precisely. It
-        can only be interpreted meaningfully in conjunction with the BETYPE or EXTTYPE,
-        which specify the kind of beginning/ending point values or beginning/extent values
-        that are being used. The BEGIN attribute can be used with or without a companion END
-        or EXTENT element. In this case, the end of the content file is assumed to be the
-        end point. -->
-
-    <!-- area questions:
-            Could you have an area with no SHAPE or BEGIN?
-            Could you have an area with both?
-            Could you have both END/BETYPE and EXTENT/EXTTYPE? -->
 
     <!-- OTHER[WHATEVER]TYPE should appear when [WHATEVER]TYPE="OTHER": LOCTYPE, MDTYPE -->
 
