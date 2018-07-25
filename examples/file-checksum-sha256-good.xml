@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<mets xmlns="http://www.loc.gov/METS/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd">
+  <metsHdr/>
+  <fileSec>
+    <fileGrp>
+      <!-- md5 checksum provided, but labeled as sha1 -->
+      <file ID="FILE1" CHECKSUM="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" CHECKSUMTYPE="SHA-256" />
+    </fileGrp>
+  </fileSec>
+  <structMap>
+    <div>
+      <fptr FILEID="FILE1"/>
+    </div>
+  </structMap>
+</mets>
