@@ -9,7 +9,7 @@
         or the semantics of external content -->
 
 
-    <pattern id="mdsec-id-checks">
+    <pattern id="mdsec-id">
         <!-- @ADMID must reference [techMD|sourceMD|rightsMD|digiprovMD]@ID
 
          The following elements support references to <techMD>, <sourceMD>, <rightsMD> and <digiprovMD>
@@ -47,7 +47,7 @@
 
 
 
-    <pattern id="file-id-checks">
+    <pattern id="file-id">
         <!-- file@ID should be referenced by some [fptr|area]@FILEID -->
         <rule context="//mets:file">
             <let name="thisid" value="@ID"/>
@@ -67,7 +67,7 @@
     </pattern>
 
 
-    <pattern id="dmdsec-id-checks">
+    <pattern id="dmdsec-id">
         <rule context="//mets:dmdSec">
             <let name="thisid" value="@ID"/>
             <assert role="warn" id="dmd-id-is-referenced"
@@ -83,18 +83,18 @@
         </rule>
     </pattern>
 
-    <pattern id="begin-end-betype-checks">
+    <pattern id="begin-end-betype">
         <rule context="//mets:file[@BEGIN | @END | @BETYPE] | //mets:stream[@BEGIN | @END | @BETYPE]">
             <assert role="info" id="end-default-value" test="@END"> INFO: When no END attribute is
                 specified, the end of the parent file is assumed also to be the end point of the
                 current <name/>. </assert>
-            <assert id="begin-end-betype" test="@BEGIN and @BETYPE"> ERROR: A <name/> with BEGIN,
+            <assert id="begin-end-betype-has-begin-betype" test="@BEGIN and @BETYPE"> ERROR: A <name/> with BEGIN,
                 END or BETYPE attributes should have BEGIN and BETYPE. </assert>
         </rule>
 
     </pattern>
 
-    <pattern id="file-parent-checks">
+    <pattern id="file-parent">
         <rule context="//mets:file[@BEGIN | @END | @BETYPE]">
             <assert id="file-begin-end-betype-has-parent" test="parent::mets:file">
                 <!-- this is enforced by the XSD for streams, but not for files. --> ERROR: A
@@ -103,7 +103,7 @@
     </pattern>
 
 
-    <pattern id="fptr-fileid-checks">
+    <pattern id="fptr-fileid">
         <rule context="//mets:fptr[@FILEID]">
             <report id="fptr-with-children-has-no-fileid"
                 test="./mets:area | ./mets:seq | ./mets:par"> ERROR: A fptr element should only have
@@ -119,20 +119,20 @@
     </pattern>
 
 
-    <pattern id="checksum-checks">
+    <pattern id="checksum">
         <!-- @CHECKSUM must have a @CHECKSUMTYPE -->
         <rule context="//mets:file[@CHECKSUMTYPE]">
-            <assert id="checksumtype-has-checksum" test="@CHECKSUM"> ERROR: A file with a
+            <assert id="checksumtype-hasum" test="@CHECKSUM"> ERROR: A file with a
                 CHECKSUMTYPE should also have an CHECKSUM </assert>
         </rule>
 
         <rule context="//mets:file[@CHECKSUM]">
-            <assert id="checksum-has-checksumtype" test="@CHECKSUMTYPE"> ERROR: A file with a
+            <assert id="checksum-hasumtype" test="@CHECKSUMTYPE"> ERROR: A file with a
                 CHECKSUM should also have a CHECKSUMTYPE </assert>
         </rule>
     </pattern>
 
-    <pattern id="checksum-format-checks">
+    <pattern id="checksum-format">
         <!-- The syntax of @CHECKSUM must match the expected syntax for @CHECKSUMTYPE -->
 
         <rule context="//mets:file[@CHECKSUMTYPE = 'MD5']">
@@ -157,7 +157,7 @@
     </pattern>
 
 
-    <pattern id="area-attribute-set-checks">
+    <pattern id="area-attribute-set">
         <!-- area: "If SHAPE is specified then COORDS must also be present" -->
         <rule context="//mets:area[@SHAPE | @COORDS]">
             <assert id="area-shape-has-coords" test="@COORDS"> ERROR: An area with SHAPE must also
@@ -176,21 +176,21 @@
         
     </pattern>
     
-    <pattern id="area-type-checks">
+    <pattern id="area-type">
         <rule context="//mets:area[@BETYPE | @EXTTYPE]">
             <report id="area-betype-exttype" test="@BETYPE and @EXTTYPE" role="warn"> WARNING: An
                 area shouldn't have both BETYPE and EXTTYPE </report>
         </rule>
     </pattern>
     
-    <pattern id="area-extent-checks">
+    <pattern id="area-extent">
         <rule context="//mets:area[@EXTENT | @END]">
             <report id="area-end-extent" test="@EXTENT and @END" role="warn"> WARNING: An area
                 shouldn't have both EXTENT and END </report>
         </rule>
     </pattern>
 
-    <pattern id="area-begin-checks">
+    <pattern id="area-begin">
         <rule context="//mets:area[@BEGIN]">
             <assert role="info" id="area-end-default-value" test="@END or @EXTENT"> INFO: When no END or EXTENT attribute is
                 specified, the end of the parent file is assumed also to be the end point of the

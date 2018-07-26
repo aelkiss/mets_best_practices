@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?> <?xml-model href="xspec.rnc" type="application/relax-ng-compact-syntax"?>
 <x:description xmlns:x="http://www.jenitennison.com/xslt/xspec" schematron="mets_best_practices.sch">
-  <x:scenario label="dmdsec-id-checks">
+  <x:scenario label="dmdsec-id">
     <x:scenario label="with one unreferenced dmdsec (examples/dmdsec-id01.xml)">
       <x:context href="examples/dmdsec-id01.xml" />
       <x:expect-assert id="dmd-id-is-referenced"/>
@@ -30,7 +30,7 @@
     </x:scenario>
   </x:scenario>
 
-  <x:scenario label="file-begin-end-checks">
+  <x:scenario label="file-begin-end">
 
     <x:scenario label="with a file with BEGIN, END, BETYPE attributes that does not have a parent file (examples/file-begin-end01.xml)">
       <x:context href="examples/file-begin-end01.xml" />
@@ -39,7 +39,7 @@
 
     <x:scenario label="with a nested file with BEGIN and END but not BETYPE (examples/file-begin-end02.xml)">
       <x:context href="examples/file-begin-end02.xml" />
-      <x:expect-assert id="begin-end-betype" />
+      <x:expect-assert id="begin-end-betype-has-begin-betype" />
     </x:scenario>
 
     <x:scenario label="with a nested file with BEGIN and BETYPE but not END (examples/file-begin-end03.xml)">
@@ -53,10 +53,9 @@
       <x:expect-valid />
     </x:scenario>
 
-
   </x:scenario>
 
-  <x:scenario label="file-id-checks">
+  <x:scenario label="file-id">
     <x:scenario label="with one unreferenced file (examples/file-id01.xml)">
       <x:context href="examples/file-id01.xml" />
       <x:expect-assert id="file-id-is-referenced"/>
@@ -77,7 +76,7 @@
     </x:scenario>
   </x:scenario>
 
-  <x:scenario label="fptr-fileid-checks">
+  <x:scenario label="fptr-fileid">
     <x:scenario label="with FILEID and no children (examples/fptr-fileid01.xml)">
       <x:context href="examples/fptr-fileid01.xml" />
       <x:expect-valid/>
@@ -96,7 +95,7 @@
     </x:scenario>
   </x:scenario>
 
-  <x:scenario label="mdsec-id-checks">
+  <x:scenario label="mdsec-id">
     <x:scenario label="with one unreferenced mdsec (examples/mdsec-id01.xml)">
       <x:context href="examples/mdsec-id01.xml" />
       <x:expect-assert id="mdsec-id-is-referenced"/>
@@ -126,19 +125,19 @@
     </x:scenario>
   </x:scenario>
 
-  <x:scenario label="checksum-checks">
+  <x:scenario label="checksum">
     <x:scenario label="with a checksumtype but no checksum (examples/file-checksum01.xml)">
       <x:context href="examples/file-checksum01.xml" />
-      <x:expect-assert id="checksumtype-has-checksum" />
+      <x:expect-assert id="checksumtype-hasum" />
     </x:scenario>
 
     <x:scenario label="with a checksum but no checksumtype (examples/file-checksum02.xml)">
       <x:context href="examples/file-checksum02.xml" />
-      <x:expect-assert id="checksum-has-checksumtype" />
+      <x:expect-assert id="checksum-hasumtype" />
     </x:scenario>
   </x:scenario>
 
-  <x:scenario label="checksum-format-checks">
+  <x:scenario label="checksum-format">
     <x:scenario label="with an md5 checksum in the wrong format (examples/file-checksum-md5-bad.xml)">
       <x:context href="examples/file-checksum-md5-bad.xml" />
       <x:expect-assert id="checksum-md5-format" />
@@ -170,7 +169,7 @@
     </x:scenario>
   </x:scenario>
 
-  <x:scenario label="area-attribute-checks">
+  <x:scenario label="area-attribute">
     <x:scenario label="with SHAPE but not COORDS (examples/area-attribute01.xml)">
       <x:context href="examples/area-attribute01.xml" />
       <x:expect-assert id="area-shape-has-coords" />
@@ -215,15 +214,11 @@
       <x:expect-valid />    
     </x:scenario>
     
-    <x:scenario label="with no area attributes">
+    <x:scenario label="with no area attributes (examples/area-attributes09.xml)">
       <x:context href="examples/area-attribute09.xml" />
       <x:expect-assert id="area-has-shape-or-begin" /> 
     </x:scenario>
     
-  </x:scenario>
-  
-  <x:scenario label="file-use-checks">
-    
-  </x:scenario>
+  </x:scenario> 
 
 </x:description>
