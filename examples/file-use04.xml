@@ -2,15 +2,13 @@
 <mets xmlns="http://www.loc.gov/METS/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd">
   <metsHdr/>
   <fileSec>
-    <fileGrp USE="use">
-      <file ID="file1"/>
+    <fileGrp>
+      <file ID="FILE1" />
     </fileGrp>
   </fileSec>
   <structMap>
     <div>
-      <fptr>
-        <area FILEID="file1" COORDS="some coordinates" SHAPE="RECT" />
-      </fptr>
+      <fptr FILEID="FILE1"/>
     </div>
   </structMap>
 </mets>

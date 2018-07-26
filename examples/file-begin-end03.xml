@@ -2,7 +2,7 @@
 <mets xmlns="http://www.loc.gov/METS/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd">
   <metsHdr/>
   <fileSec>
-    <fileGrp>
+    <fileGrp USE="use">
       <file ID="file1">
         <file ID="file2" BEGIN="1" BETYPE="BYTE"/>
       </file>

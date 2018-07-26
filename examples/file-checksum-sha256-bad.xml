@@ -2,7 +2,7 @@
 <mets xmlns="http://www.loc.gov/METS/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd">
   <metsHdr/>
   <fileSec>
-    <fileGrp>
+    <fileGrp USE="use">
       <!-- md5 checksum provided, but labeled as sha-256 -->
       <file ID="FILE1" CHECKSUM="d41d8cd98f00b204e9800998ecf8427e" CHECKSUMTYPE="SHA-256" />
     </fileGrp>
