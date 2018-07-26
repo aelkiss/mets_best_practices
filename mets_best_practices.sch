@@ -207,21 +207,42 @@
                 WARNING: A fileGrp, file, FLocat, or FContent with a USE attribute has an ancestor with a USE attribute. USE should apply to all nested fileGrp, file, FLocat, and FContent elements.
             </assert>
         </rule>
-        
-        <rule context="//mets:FLocat[not(@USE)] | //mets:FContent[not(@USE)]">
-            <assert role="info" id="no-file-use" test="count(ancestor-or-self::*[@USE]) = 1">
-                WARNING: A <name /> has no ancestor with a USE attribute. All <name /> should have a USE either on the <name /> or on an ancestor file or fileGrp.
+
+        <rule context="//mets:FLocat[not(@USE)] | 
+            //mets:FContent[not(@USE)] | 
+            //mets:file[not(@USE)][not(./mets:FLocat | ./mets:FContent | ./mets:file)] | 
+            //mets:fileGrp[not(@USE)][not(./mets:FLocat | ./mets:FContent | ./mets:file | ./mets:fileGrp)]">
+            <assert role="warning" id="no-file-use" test="count(ancestor-or-self::*[@USE]) = 1">
+                WARNING: A <name /> element has no USE attribute and no ancestor with a USE attribute. All <name /> elements should have a USE either on the <name /> or on an ancestor file or fileGrp.
+            </assert>
+        </rule>
+    </pattern>
+
+    <!-- file@SEQ should appear in sequential order in the document and contain no gaps -->   
+    <pattern id="file-seq-sequence">
+        <rule context="//mets:file[@SEQ][following-sibling::mets:file[@SEQ]]">
+            <assert role="warning" id="file-seq-nonsequential" test="following-sibling::mets:file[@SEQ][1]/@SEQ = @SEQ+1">
+                WARNING: file SEQ attributes have skips or are out of order.
             </assert>
         </rule>
     </pattern>
     
-    <pattern id="file-use2">
-        
+    <pattern id="file-seq-initial">        
+        <rule context="//mets:*/mets:file[@SEQ][1]">
+            <assert role="warning" id="file-seq-bad-initial-value" test="@SEQ = 1">
+                WARNING: The first file SEQ attribute is <value-of select="@SEQ"/> but should be 1.
+            </assert>
+        </rule>
     </pattern>
-
-    <!-- every fileGrp, file, or FLocat/FContent should have exactly one USE (inherited or otherwise) -->
-
-    <!-- file@SEQ should appear in sequential order in the document and contain no gaps -->
+    
+    <pattern id="file-seq-siblings">
+        <rule context="//mets:file[not(@SEQ)]">
+            <report role="warning" id="file-seq-sibling-without-seq" test="./parent::*/mets:file[@SEQ]">
+                WARNING: A file without a SEQ attribute is a sibling of another file that does have a SEQ attribute. Either all sibling files should have SEQ attributes or none should.
+            </report>
+        </rule>
+    </pattern>
+        
     <!-- div@ORDER should appear in sequential order in the document and contain no gaps -->
 
     <!-- div,area@ADMID should reference a rightsMD? -->

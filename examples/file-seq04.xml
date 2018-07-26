@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<mets xmlns="http://www.loc.gov/METS/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd">
+  <metsHdr/>
+  <fileSec>
+    <fileGrp USE="something">
+      <file ID="FILE1" SEQ="1" />
+      <file ID="FILE2" SEQ="2" />
+      <file ID="FILE3" SEQ="3" />      
+    </fileGrp>
+  </fileSec>
+  <structMap>
+    <div>
+      <fptr FILEID="FILE1"/>
+      <fptr FILEID="FILE2"/>
+      <fptr FILEID="FILE3"/>
+    </div>    
+  </structMap>
+</mets>

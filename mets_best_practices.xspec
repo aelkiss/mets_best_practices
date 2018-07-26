@@ -246,12 +246,50 @@
       <x:expect-assert id="multiple-file-use" />
     </x:scenario>    
     
-    <x:scenario label="with an FLocat and no USE attributes on any ancestors (examples/file-use03.xml)">
+    <x:scenario label="with an FLocat with no USE and no USE attributes on any ancestors (examples/file-use03.xml)">
       <x:context href="examples/file-use03.xml" />
       <x:expect-valid />
       <x:expect-assert id="no-file-use" />
     </x:scenario> 
     
+    <x:scenario label="with a terminal file with no USE and no USE attributes on any ancestors (examples/file-use04.xml)">
+      <x:context href="examples/file-use04.xml" />
+      <x:expect-valid />
+      <x:expect-assert id="no-file-use" />
+    </x:scenario> 
+     
+    <x:scenario label="with a terminal fileGrp with no USE and no USE attributes on any ancestors (examples/file-use05.xml)">
+      <x:context href="examples/file-use05.xml" />
+      <x:expect-valid />
+      <x:expect-assert id="no-file-use" />
+    </x:scenario> 
+    
+    <x:scenario label="with a file with SEQ=1 and a file with SEQ=3 (examples/file-seq01.xml)">
+      <x:context href="examples/file-seq01.xml" />
+      <x:expect-valid />
+      <x:expect-assert id="file-seq-nonsequential" />
+    </x:scenario>
+    
+    <x:scenario label="with a file with SEQ=2 and a file with SEQ=3 (examples/file-seq02.xml)">
+      <x:context href="examples/file-seq02.xml" />
+      <x:expect-valid />
+      <x:expect-assert id="file-seq-bad-initial-value" />
+    </x:scenario>
+    
+    <x:scenario label="with a file with SEQ and a sibling without SEQ (examples/file-seq03.xml)">
+      <x:context href="examples/file-seq03.xml" />
+      <x:expect-valid />
+      <x:expect-report id="file-seq-sibling-without-seq" />
+    </x:scenario>
+    
+    <x:scenario label="with three files with in-order SEQ attributes starting with 1 (examples/file-seq04.xml)">
+      <x:context href="examples/file-seq04.xml" />
+      <x:expect-valid />
+      <x:expect-not-assert />
+      <x:expect-not-report />
+    </x:scenario>
+      
+     
   </x:scenario> 
 
 </x:description>
