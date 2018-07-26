@@ -196,11 +196,28 @@
                 specified, the end of the parent file is assumed also to be the end point of the
                 current <name/>. </assert>            
         </rule>
-    </pattern>
+    </pattern>      
         
     <!-- warn if area has no SHAPE or BEGIN -->
     
     <!-- every fileGrp, file, or FLocat/FContent must have no more than one USE (inherited or otherwise) -->
+    <pattern id="file-use">
+        <rule context="//mets:fileGrp[@USE] | //mets:file[@USE] | //mets:FLocat[@USE] | //mets:FContent[@USE]">
+            <assert role="warning" id="multiple-file-use" test="count(ancestor-or-self::*[@USE]) = 1">
+                WARNING: A fileGrp, file, FLocat, or FContent with a USE attribute has an ancestor with a USE attribute. USE should apply to all nested fileGrp, file, FLocat, and FContent elements.
+            </assert>
+        </rule>
+        
+        <rule context="//mets:FLocat[not(@USE)] | //mets:FContent[not(@USE)]">
+            <assert role="info" id="no-file-use" test="count(ancestor-or-self::*[@USE]) = 1">
+                WARNING: A <name /> has no ancestor with a USE attribute. All <name /> should have a USE either on the <name /> or on an ancestor file or fileGrp.
+            </assert>
+        </rule>
+    </pattern>
+    
+    <pattern id="file-use2">
+        
+    </pattern>
 
     <!-- every fileGrp, file, or FLocat/FContent should have exactly one USE (inherited or otherwise) -->
 

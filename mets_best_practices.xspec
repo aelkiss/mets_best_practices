@@ -102,7 +102,9 @@
       <x:expect-valid/>
     </x:scenario>
     <x:scenario label="with one properly referenced mdsec (examples/mdsec-id02.xml)">
-      <x:context href="examples/mdsec-id02.xml" />
+      <x:context href="examples/mdsec-id02.xml" />      
+      <x:expect-not-assert />
+      <x:expect-not-report />
       <x:expect-valid/>
     </x:scenario>
     <x:scenario label="with two mdsecs, one referenced, one not (examples/mdsec-id03.xml)">
@@ -145,7 +147,9 @@
 
     <x:scenario label="with an md5 checksum with the correct format (examples/file-checksum-md5-good.xml)">
       <x:context href="examples/file-checksum-md5-good.xml" />
-      <x:expect-valid />
+      <x:expect-valid />      
+      <x:expect-not-assert />
+      <x:expect-not-report />
     </x:scenario>
 
     <x:scenario label="with a sha1 checksum in the wrong format (examples/file-checksum-sha1-bad.xml)">
@@ -154,7 +158,9 @@
     </x:scenario>
 
     <x:scenario label="with a sha1 checksum in the correct format (examples/file-checksum-sha1-good.xml)">
-      <x:context href="examples/file-checksum-sha1-good.xml" />
+      <x:context href="examples/file-checksum-sha1-good.xml" />      
+      <x:expect-not-assert />
+      <x:expect-not-report />
       <x:expect-valid />
     </x:scenario>
 
@@ -165,7 +171,9 @@
 
     <x:scenario label="with a sha256 checksum in the correct format (examples/file-checksum-sha256-good.xml)">
       <x:context href="examples/file-checksum-sha256-good.xml" />
-      <x:expect-valid />
+      <x:expect-valid />      
+      <x:expect-not-assert />
+      <x:expect-not-report />
     </x:scenario>
   </x:scenario>
 
@@ -182,7 +190,9 @@
 
     <x:scenario label="with both COORDS and SHAPE (examples/area-attribute03.xml)">
       <x:context href="examples/area-attribute03.xml" />
-      <x:expect-valid />
+      <x:expect-valid />      
+      <x:expect-not-assert />
+      <x:expect-not-report />
     </x:scenario>
 
     <x:scenario label="with COORDS, SHAPE, BEGIN, END, BETYPE (examples/area-attribute04.xml)">
@@ -206,18 +216,41 @@
     
     <x:scenario label="with BEGIN, END, BETYPE (examples/area-attributes07.xml)">
       <x:context href="examples/area-attribute07.xml" />
-      <x:expect-valid />
+      <x:expect-valid />      
+      <x:expect-not-assert />
+      <x:expect-not-report />
     </x:scenario>
     
     <x:scenario label="with BEGIN, EXTENT, EXTTYPE (examples/area-attributes08.xml)">
       <x:context href="examples/area-attribute08.xml" />
-      <x:expect-valid />    
+      <x:expect-valid />      
+      <x:expect-not-assert />
+      <x:expect-not-report />
     </x:scenario>
     
     <x:scenario label="with no area attributes (examples/area-attributes09.xml)">
       <x:context href="examples/area-attribute09.xml" />
       <x:expect-assert id="area-has-shape-or-begin" /> 
     </x:scenario>
+    
+    <x:scenario label="with USE on one fileGrp (examples/file-use01.xml)">
+      <x:context href="examples/file-use01.xml" />
+      <x:expect-valid />
+      <x:expect-not-assert />
+      <x:expect-not-report />
+    </x:scenario>
+    
+    <x:scenario label="with USE on a fileGrp and a descendant file (examples/file-use02.xml)">
+      <x:context href="examples/file-use02.xml" />
+      <x:expect-valid />
+      <x:expect-assert id="multiple-file-use" />
+    </x:scenario>    
+    
+    <x:scenario label="with an FLocat and no USE attributes on any ancestors (examples/file-use03.xml)">
+      <x:context href="examples/file-use03.xml" />
+      <x:expect-valid />
+      <x:expect-assert id="no-file-use" />
+    </x:scenario> 
     
   </x:scenario> 
 
